@@ -1,0 +1,118 @@
+<%- include('partials/_header'); %>
+<div class="container">
+  <div class="row">
+    <div class="col-md-11 centrar">
+      <table class="table table-bordered table-hover">
+        <thead class="cabecera">
+          <tr>
+            <th>N°</th>
+            <th>Título</th>
+            <th>Versionado</th>
+            <th>Duración</th>
+            <th colspan="2">Disco</th>
+            <th>Intérprete</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% for(var i=0; i < canciones.length; i++) { %>
+          <tr>
+              <td>
+                <%= i+1 %>
+              </td>
+              <td><strong>
+                <a href="/canciones/<%= canciones[i].id %>">
+                  <%= canciones[i].titulo %>
+                </a>
+              </strong></td>
+              <td><%= canciones[i].cantante %></td>
+              <td class="centrar-texto"><%= canciones[i].duracion %></td>
+              <td><a href="/discos/<%= canciones[i].disco.id %>">
+                <%= canciones[i].disco.titulo %></a>
+              </td>
+              <td>
+                <a href="/discos/<%= canciones[i].disco.id %>">
+                  <img src="<%= canciones[i].disco.caratula %>" alt="" width="60px">
+                </a>
+              </td>
+              <td><a href="/interpretes/<%= canciones[i].interprete.id %>">
+                <%= canciones[i].interprete.nombre %></td></a>
+              <td class="centrar-texto">
+                <button class="button btn-success mb-1">
+                  <a class="text-light" href="/editCancion/<%= canciones[i].id %>">editar</a>
+                </button>
+                <form action="/deleteCancion/<%= canciones[i].id %>?_method=DELETE" method="POST">
+                  <button class="button btn-danger mt-1" type="submit">
+                    eliminar
+                  </button>
+                </form>
+              </td>
+            </tr>
+          <% } %>
+        </tbody>
+      </table>
+      <div class="mb-3">
+        <a class="btn btn-primary btn-block" href="/addCancion">
+          Añadir
+        </a>
+      </div>
+      <div class="row">
+        <% if(paginas) { %>
+          <nav class="mx-auto">
+            <ul class="pagination">
+              <!--primera página-->
+              <% if(current == 0) { %>
+                <li class="page-item active">
+                  <a href="#" class="page-link">Primera página</a>
+                </li>
+              <% } else { %>
+                <li class="page-item">
+                  <a href="/canciones?page=0" class="page-link">Primera página</a>
+                </li>
+              <% } %>
+              <!--Páginas intermedias-->
+              <% var i = Number(current) > 5 ? Number(current) - 5 : 1 %>	
+              <% if(i !== 1) { %>
+                <li class="page-item disabled">
+                  <a href="#" class="page-link">...</a>
+                </li>
+              <% } %>
+              <% for(; i<=Number(current)+4 && i<=paginas; i+=1) { %>
+                <% if(i == current) { %>
+                  <li class="page-item active">
+                    <a href="/canciones?page=<%= i %>" class="page-link"><%= i+1 %></a>
+                  </li>
+                <% } else { %>
+                  <li class="page-item">
+                    <a href="/canciones?page=<%= i %>" class="page-link"><%= i+1 %></a>
+                  </li>
+                <% } %>
+                <% if(i == Number(current) + 4 && i < paginas) { %>
+                  <li class="page-item disabled">
+                    <a href="#" class="page-link">...</a>
+                  </li>
+                <% } %>
+              <%} %>
+              <!--última página-->
+              <% if(current == paginas) { %>
+                <li class="page-item disabled">
+                  <a href="#" class="page-link">Ultima página</a>
+                </li>
+              <% } else { %>
+                <li class="page-item">
+                  <a href="/canciones?page=<%= paginas %>" class="page-link">Ultima página</a>
+                </li>
+              <% } %>
+            </ul>
+          </nav>
+        <% } %>
+      </div>
+    </div>
+  </div>
+  <div class="card-body centrar-texto">
+    <a href="/canciones?page=0" class="btn btn-volver">
+      Volver
+    </a>
+  </div>
+</div>
+<%- include('partials/_footer'); %>

@@ -1,0 +1,109 @@
+<%- include('partials/_header'); %>
+<div class="container">
+  <div class="row">
+    <div class="col-md-7 centrar">
+      <table class="table table-hover">
+        <thead>
+          <tr class="cabecera">
+            <th>N°</th>
+            <th>Nombre</th>
+            <th>Nacionalidad</th>
+            <th>Foto</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% for(var i=0; i < interpretes.length; i++) { %>
+            <tr>
+              <td><%= i + 1 %></td>
+              <td><strong>
+                <%= interpretes[i].nombre %></strong>
+              </td>
+              <td><%= interpretes[i].nacionalidad %></td>
+              <td class="centrar-texto">
+                <a href="/interpretes/<%= interpretes[i].id %>">
+                  <img src="<%= interpretes[i].caratula %>" alt="" width="70px" height="70px">
+                </a>
+              </td>
+              <td class="centrar-texto">
+                <button class="button btn-success mb-1">
+                  <a class="text-light" href="/editInterprete/<%= interpretes[i].id %>">
+                    editar
+                  </a>
+                </button>
+                <form action="/deleteInterprete/<%= interpretes[i].id %>?_method=DELETE" method="POST">
+                  <button class="button btn-danger mt-1 pe-auto" type="submit">
+                    eliminar
+                  </button>
+                </form>
+              </td>
+            </tr>
+          <% } %>
+        </tbody>
+      </table>
+      <div class="mb-3">
+        <a class="btn btn-primary btn-block" href="/addInterprete">
+        <!-- <a class="btn btn-primary btn-block" href="#"> -->
+          Añadir
+        </a>
+      </div>
+      <div class="row">
+        <% if(paginas) { %>
+          <nav class="mx-auto">
+            <ul class="pagination">
+              <!-- primera página -->
+              <% if(current == 0) { %>
+                <li class="page-item active">
+                  <a href="#" class="page-link">Primera página</a>
+                </li>
+              <% } else { %>
+                <li class="page-item">
+                  <a href="/interpretes?page=0" class="page-link">Primera página</a>
+                </li>
+              <% } %>
+              <!--Páginas intermedias-->
+              <% var i = Number(current) > 5 ? Number(current) - 5 : 1 %>	
+              <% if(i !== 1) { %>
+                <li class="page-item disabled">
+                  <a href="#" class="page-link">...</a>
+                </li>
+              <% } %>
+              <% for(; i<=Number(current)+4 && i<=paginas; i+=1) { %>
+                <% if(i == current) { %>
+                  <li class="page-item active">
+                    <a href="/interpretes?page=<%= i %>" class="page-link"><%= i+1 %></a>
+                  </li>
+                <% } else { %>
+                  <li class="page-item">
+                    <a href="/interpretes?page=<%= i %>" class="page-link"><%= i+1 %></a>
+                  </li>
+                <% } %>
+                <% if(i == Number(current) + 4 && i < paginas) { %>
+                  <li class="page-item disabled">
+                    <a href="#" class="page-link">...</a>
+                  </li>
+                <% } %>
+              <%} %>
+              <!--última página-->
+              <% if(current == paginas) { %>
+                <li class="page-item disabled">
+                  <a href="#" class="page-link">Ultima página</a>
+                </li>
+              <% } else { %>
+                <li class="page-item">
+                  <a href="/interpretes?page=<%= paginas %>" class="page-link">Ultima página</a>
+                </li>
+              <% } %>
+            </ul>
+          </nav>
+        <% } %>
+      </div>
+    </div>
+  </div>
+  <div class="card-body centrar-texto">
+    <a href="/" class="btn btn-volver">
+      Volver
+    </a>
+  </div>
+</div>
+  <%- include('partials/_footer'); %>

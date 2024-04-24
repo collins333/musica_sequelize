@@ -1,0 +1,42 @@
+<%- include('partials/_header'); %>
+<div class="container">
+  <div class="col-md-8 centrar">
+    <table class="table table-bordered table-hover">
+      <thead class="cabecera">
+        <th>Intérprete</th>
+        <th>Título</th>
+        <th>Duración</th>
+      </thead>
+      <tr>
+        <td>
+          <a href="/interpretes/<%= cancion.interprete.id %>">
+            <%= cancion.interprete.nombre %></td>
+          </a>
+        <td class="titulo">
+          <a href="<%= cancion.enlace %>" target="_blank">
+            <%= cancion.titulo %>
+          </a>
+        </td>
+        <td class="centrar-texto"><%= cancion.duracion %></td>
+      </tr>      
+      <tr>
+        <td><strong>Album:</strong></td>
+        <td colspan="2">
+          <a href="/discos/<%= cancion.disco.id %>">
+            <%= cancion.disco.titulo %>
+          </a>
+        </td>
+      </tr>
+      <tr>
+        <td><strong>Versionada:</strong></td>
+        <td colspan="2"><%= cancion.cantante %></td>
+      </tr>
+    </table>
+  </div>
+  <div class="card-body centrar-texto">
+    <a href="/canciones?page=0" class="btn btn-volver">
+      Volver
+    </a>
+  </div>
+</div>
+<%- include('partials/_footer'); %>
