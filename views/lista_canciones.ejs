@@ -17,37 +17,41 @@
         <tbody>
           <% for(var i=0; i < canciones.length; i++) { %>
           <tr>
-              <td>
-                <%= i+1 %>
-              </td>
-              <td><strong>
-                <a href="/canciones/<%= canciones[i].id %>">
-                  <%= canciones[i].titulo %>
-                </a>
-              </strong></td>
+            <td>
+              <%= i+1 %>
+            </td>
+            <td><strong>
+              <a href="/canciones/<%= canciones[i].id %>">
+                <%= canciones[i].titulo %>
+              </a>
+            </strong></td>
+            <% if (canciones[i].cantante) { %>
               <td><%= canciones[i].cantante %></td>
-              <td class="centrar-texto"><%= canciones[i].duracion %></td>
-              <td><a href="/discos/<%= canciones[i].disco.id %>">
-                <%= canciones[i].disco.titulo %></a>
-              </td>
-              <td>
-                <a href="/discos/<%= canciones[i].disco.id %>">
-                  <img src="<%= canciones[i].disco.caratula %>" alt="" width="60px">
-                </a>
-              </td>
-              <td><a href="/interpretes/<%= canciones[i].interprete.id %>">
-                <%= canciones[i].interprete.nombre %></td></a>
-              <td class="centrar-texto">
-                <button class="button btn-success mb-1">
-                  <a class="text-light" href="/editCancion/<%= canciones[i].id %>">editar</a>
+            <% } else { %>
+              <td><%= canciones[i].interprete.nombre %></td>
+            <% } %> 
+            <td class="centrar-texto"><%= canciones[i].duracion %></td>
+            <td><a href="/discos/<%= canciones[i].disco.id %>">
+              <%= canciones[i].disco.titulo %></a>
+            </td>
+            <td>
+              <a href="/discos/<%= canciones[i].disco.id %>">
+                <img src="<%= canciones[i].disco.caratula %>" alt="" width="60px">
+              </a>
+            </td>
+            <td><a href="/interpretes/<%= canciones[i].interprete.id %>">
+              <%= canciones[i].interprete.nombre %></td></a>
+            <td class="centrar-texto">
+              <button class="button btn-success mb-1">
+                <a class="text-light" href="/editCancion/<%= canciones[i].id %>">editar</a>
+              </button>
+              <form action="/deleteCancion/<%= canciones[i].id %>?_method=DELETE" method="POST">
+                <button class="button btn-danger mt-1" type="submit">
+                  eliminar
                 </button>
-                <form action="/deleteCancion/<%= canciones[i].id %>?_method=DELETE" method="POST">
-                  <button class="button btn-danger mt-1" type="submit">
-                    eliminar
-                  </button>
-                </form>
-              </td>
-            </tr>
+              </form>
+            </td>
+          </tr>
           <% } %>
         </tbody>
       </table>
