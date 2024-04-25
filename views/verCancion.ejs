@@ -6,6 +6,8 @@
         <th>Intérprete</th>
         <th>Título</th>
         <th>Duración</th>
+        <th>Disco</th>
+        <th>Cantante</th>
       </thead>
       <tr>
         <td>
@@ -18,19 +20,17 @@
           </a>
         </td>
         <td class="centrar-texto"><%= cancion.duracion %></td>
-      </tr>      
-      <tr>
-        <td><strong>Album:</strong></td>
-        <td colspan="2">
+        <td>
           <a href="/discos/<%= cancion.disco.id %>">
             <%= cancion.disco.titulo %>
           </a>
         </td>
-      </tr>
-      <tr>
-        <td><strong>Versionada:</strong></td>
-        <td colspan="2"><%= cancion.cantante %></td>
-      </tr>
+        <% if(cancion.cantante) { %>
+          <td colspan="2"><%= cancion.cantante %></td>
+        <% } else { %>
+          <td colspan="2"><%= cancion.interprete.nombre %></td>
+        <% } %>
+      </tr>      
     </table>
   </div>
   <div class="card-body centrar-texto">
